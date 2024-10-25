@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView, ActivityIndicator, Image } from 'react-native';
 import baseUrl from '../../components/services/baseUrl';
 
 const Categories = () => {
@@ -19,12 +19,12 @@ const Categories = () => {
 
         const data = await response.json();
 
-        // Log the response data
-        console.log(data);
 
         if (Array.isArray(data)) {
           const activeCategories = data.filter(category => category.active);
           setCategories(activeCategories);
+          console.log(activeCategories[0].image);
+
         } else {
           console.error("Unexpected data format:", data);
         }
@@ -51,15 +51,17 @@ const Categories = () => {
       {categories.length === 0 ? (
         <Text>No categories available</Text>
       ) : (
-        <FlatList
-          data={categories}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <View >
-              <Text className='text-3xl text-rose-600'>{item.name} </Text>
-            </View>
-          )}
-        />
+        categories.map(cat =>
+          <View key={cat._id} className=''>
+            <Text>{cat.name}</Text>
+            <Image
+              source={{ uri: `${baseUrl}/${cat.image}` }}
+              style={styles.image} // Apply your styling here
+              resizeMode="cover" // Optional: sets how the image will fit into the view
+              height={180}
+            />
+          </View>
+        )
       )}
     </SafeAreaView>
   );
