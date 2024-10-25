@@ -2,15 +2,17 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons'; // Import the Ionicons library
+import { Ionicons } from '@expo/vector-icons'; 
+import { useDispatch } from 'react-redux';
+import { toggleDrawer } from '../../lib/slices/drawerSlice';
 
 const NavBar = () => {
     const router = useRouter();
-
+    const dispatch = useDispatch();
     return (
         <View  style={styles.container}>
             {/* Hamburger Icon */}
-            <TouchableOpacity onPress={() => console.log('Menu pressed')}>
+            <TouchableOpacity  onPress={() => dispatch(toggleDrawer())}>
                 <Ionicons name="menu" size={24} color="black" />
             </TouchableOpacity>
 

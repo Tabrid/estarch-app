@@ -57,6 +57,10 @@ const Categories = () => {
           renderItem={({ item }) => (
             <View >
               <Text className='text-3xl text-rose-600'>{item.name} </Text>
+              <Text className='text-3xl text-rose-600'>{item.name} </Text>
+              <Text className='text-3xl text-rose-600'>{item.name} </Text>
+              <Text className='text-3xl text-rose-600'>{item.name} </Text>
+              <Text className='text-3xl text-rose-600'>{item.name} </Text>
             </View>
           )}
         />
