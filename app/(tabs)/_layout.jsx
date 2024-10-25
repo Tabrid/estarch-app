@@ -4,18 +4,19 @@ import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from '../../components/Navbar/Navbar';
-
+import CustomDrawer from '../../components/CustomDrawer/CustomDrawer';
+import 'react-native-gesture-handler';
 const TabStructure = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
         <NavBar />
+        
       <Tabs
         screenOptions={{
           headerShown: false, // Hide the header
           tabBarLabel: () => null, // Hide the tab labels
           tabBarActiveTintColor: 'blue',
           tabBarInactiveTintColor: 'gray',
-
         }}>
         <Tabs.Screen
           name="index"
@@ -39,6 +40,7 @@ const TabStructure = () => {
           }}
         />
       </Tabs>
+      <CustomDrawer />
     </SafeAreaView>
   );
 };
