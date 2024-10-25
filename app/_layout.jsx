@@ -6,7 +6,7 @@ import store from '../lib/store.js';
 
 export default function RootLayout() {
   return (
-    <Provider store={store}>
+    <Provider store={store} >
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
       </Stack>
