@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, FlatList, SafeAreaView, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
 import baseUrl from '../../components/services/baseUrl';
+import { Link, router } from 'expo-router';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -29,26 +30,27 @@ const Categories = () => {
     };
     fetchCategories();
   }, []);
-
+  
   const renderCategoryItem = ({ item }) => (
-    <TouchableOpacity style={styles.categoryItem}>
-      <Image
+    <TouchableOpacity  onPress={()=> router.push(`${item?.type?.name}/${item?.name}`)} style={styles.categoryItem}>
+      <ImageBackground
         source={{ uri: `${baseUrl}/${item.image}` }}
-        style={styles.image}
+        style={styles.imageBackground} // Background image styling
         resizeMode="cover"
-        height={100}
-        
-      />
-      <View className='absolute top-1/2 left-1/2 translate-x-1/2 translate-y-1/2' style={styles.overlay}>
-        <Text style={styles.categoryName}>{item.name}</Text>
-      </View>
+        className='h-[100px]'
+      >
+        <View style={styles.overlayMain} />
+        <View style={styles.overlay} className='mx-auto text-center mt-[60]'>
+          <Text className='text-center' style={styles.categoryName}>{item.name}</Text>
+        </View>
+      </ImageBackground>
     </TouchableOpacity>
   );
 
   if (loading) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#ffffff" />
+        <ActivityIndicator size="large" color="#000" />
       </SafeAreaView>
     );
   }
@@ -75,6 +77,7 @@ export default Categories;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop:10
   },
   loadingContainer: {
     flex: 1,
@@ -90,6 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#333333',
     borderRadius: 8,
     overflow: 'hidden',
+    elevation: 10,
   },
   categoryName: {
     color: '#ffffff', // White text color for readability on black background
@@ -104,6 +108,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,        // Adds a 2px border
     borderColor: "white",  // Sets the border color to white
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Optional: Adds a translucent black background for contrast
+  },
+
+  overlayMain: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)', // Semi-transparent overlay
+    borderRadius: 8,
   },
   noCategoriesText: {
     color: '#ffffff', // White text color for "No categories" message
