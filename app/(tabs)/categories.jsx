@@ -37,10 +37,10 @@ const Categories = () => {
         source={{ uri: `${baseUrl}/${item.image}` }}
         style={styles.imageBackground} // Background image styling
         resizeMode="cover"
-        className='h-[100px]'
+        className='h-[110px]'
       >
         <View style={styles.overlayMain} />
-        <View style={styles.overlay} className='mx-auto text-center mt-[60]'>
+        <View style={styles.overlay} className='mx-auto text-center mt-[65]'>
           <Text className='text-center' style={styles.categoryName}>{item.name}</Text>
         </View>
       </ImageBackground>
