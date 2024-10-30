@@ -3,44 +3,60 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import NavBar from '../../components/Navbar/Navbar';
-import CustomDrawer from '../../components/CustomDrawer/CustomDrawer';
 import 'react-native-gesture-handler';
 const TabStructure = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-        <NavBar />
-        
       <Tabs
         screenOptions={{
-          headerShown: false, // Hide the header
-          tabBarLabel: () => null, // Hide the tab labels
-          tabBarActiveTintColor: 'blue',
+          headerShown: false,
+          tabBarLabel: () => null,
+          tabBarActiveTintColor: 'black',
           tabBarInactiveTintColor: 'gray',
-        }}>
+          tabBarStyle: {
+            height: 50, 
+            paddingHorizontal: 5, 
+            paddingVertical: 0,
+          },
+        }}
+      >
         <Tabs.Screen
           name="index"
           options={{
-            tabBarLabel: "Home",
-            tabBarIcon: () => <Ionicons name="home-outline" size={24} color="black" />
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="home-outline" size={24} color={color} />
+            ),
+            tabBarItemStyle: {
+              marginHorizontal: -15,
+            },
           }}
         />
         <Tabs.Screen
           name="categories"
           options={{
-            tabBarLabel: "Categories",
-            tabBarIcon: () => <Ionicons name="grid-outline" size={24} color="black" />
+            tabBarLabel: 'Categories',
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="grid-outline" size={24} color={color} />
+            ),
+            tabBarItemStyle: {
+              marginHorizontal: -15,
+            },
           }}
         />
         <Tabs.Screen
           name="cart"
           options={{
-            tabBarLabel: "Cart",
-            tabBarIcon: () => <Ionicons name="cart-outline" size={24} color="black" />
+            tabBarLabel: 'Cart',
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="cart-outline" size={24} color={color} />
+            ),
+            tabBarItemStyle: {
+              marginHorizontal: -15,
+            },
           }}
         />
-      </Tabs>
-      <CustomDrawer />
+      </Tabs>  
     </SafeAreaView>
   );
 };

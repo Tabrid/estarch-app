@@ -37,12 +37,12 @@ const Categories = () => {
         style={styles.image}
         resizeMode="cover"
         height={100}
-        
       />
-      <View className='absolute top-1/2 left-1/2 translate-x-1/2 translate-y-1/2' style={styles.overlay}>
+      <View style={styles.overlay}>
         <Text style={styles.categoryName}>{item.name}</Text>
       </View>
     </TouchableOpacity>
+
   );
 
   if (loading) {
@@ -62,8 +62,8 @@ const Categories = () => {
           data={categories}
           keyExtractor={(item) => item._id}
           renderItem={renderCategoryItem}
-          numColumns={2} // Two items per row
-          columnWrapperStyle={styles.row} // Optional: spacing between items
+          numColumns={2}
+          columnWrapperStyle={styles.row}
         />
       )}
     </SafeAreaView>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   row: {
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between',
   },
   categoryItem: {
     flex: 1,
@@ -91,22 +91,32 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-  categoryName: {
-    color: '#ffffff', // White text color for readability on black background
-    fontSize: 12,
-    fontWeight: 'bold',
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 4,
+  image: {
+    width: '100%',
+    height: 100,
   },
   overlay: {
+    ...StyleSheet.absoluteFillObject, // Full overlay
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 8,
-    borderWidth: 2,        // Adds a 2px border
-    borderColor: "white",  // Sets the border color to white
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Optional: Adds a translucent black background for contrast
+    borderWidth: 2,
+    borderColor: 'white',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  categoryName: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: 'bold',
+    paddingVertical: 3, 
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#ffffff',
+    textAlign: 'center',
   },
   noCategoriesText: {
-    color: '#ffffff', // White text color for "No categories" message
+    color: '#ffffff',
     textAlign: 'center',
   },
 });
