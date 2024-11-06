@@ -1,8 +1,6 @@
 // app/cart.js
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import Navbar2 from '../../components/Navbar/Navbar2.jsx'
-
 
 const cartData = [
   { id: '1', name: 'Laptop', price: 800 },
@@ -14,22 +12,20 @@ const Cart = () => {
   const totalAmount = cartData.reduce((total, item) => total + item.price, 0);
 
   return (
-    <View className='flex-1'>
-      <Navbar2 />
-      <View style={styles.container}>
-        <FlatList
-          data={cartData}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.cartItem}>
-              <Text style={styles.cartItemName}>{item.name}</Text>
-              <Text style={styles.cartItemPrice}>${item.price.toFixed(2)}</Text>
-            </View>
-          )}
-        />
-        <View >
-          <Text >Total: ${totalAmount.toFixed(2)}</Text>
-        </View>
+    <View style={styles.container}>
+
+      <FlatList
+        data={cartData}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.cartItem}>
+            <Text style={styles.cartItemName}>{item.name}</Text>
+            <Text style={styles.cartItemPrice}>${item.price.toFixed(2)}</Text>
+          </View>
+        )}
+      />
+      <View >
+        <Text >Total: ${totalAmount.toFixed(2)}</Text>
       </View>
     </View>
   );

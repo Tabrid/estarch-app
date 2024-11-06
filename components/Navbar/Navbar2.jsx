@@ -6,16 +6,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { toggleDrawer } from '../../lib/slices/drawerSlice';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
-const Navbar = () => {
+const Navbar2 = () => {
     const router = useRouter();
-    const dispatch = useDispatch();
-   
+
+    const handleGoBack = () => {
+        router.back();
+    };
     return (
         <View style={styles.container}>
             {/* Hamburger Icon */}
-            <TouchableOpacity className='flex ml-2' onPress={() => dispatch(toggleDrawer())}>
-                <Ionicons name="menu" size={24} color="black" />
+            <TouchableOpacity className='flex ml-2' onPress={() => handleGoBack()}>
+            <AntDesign name="left" size={24} color="black" />
 
             </TouchableOpacity>
             {/* Logo */}
@@ -73,4 +76,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Navbar;
+export default Navbar2;
