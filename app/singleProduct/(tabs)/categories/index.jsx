@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, ImageBackground, Text, View, FlatList, SafeAreaView, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
-import baseUrl from '../../components/services/baseUrl';
+import baseUrl from '../../../../components/services/baseUrl';
 import { Link, router } from 'expo-router';
 
 const Categories = () => {
@@ -32,7 +32,7 @@ const Categories = () => {
   }, []);
   
   const renderCategoryItem = ({ item }) => (
-    <TouchableOpacity  onPress={()=> router.push(`${item?.type?.name}/${item?.name}`)} style={styles.categoryItem}>
+    <TouchableOpacity  onPress={()=> router.push(`/categories/${item?.type?.name}/${item?.name}`)} style={styles.categoryItem}>
       <ImageBackground
         source={{ uri: `${baseUrl}/${item.image}` }}
         style={styles.imageBackground} // Background image styling
@@ -78,12 +78,14 @@ export default Categories;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:10
+    backgroundColor: '#ffffff', 
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffffff', 
+
   },
   row: {
     justifyContent: 'space-between',
@@ -91,10 +93,12 @@ const styles = StyleSheet.create({
   categoryItem: {
     flex: 1,
     margin: 5,
-    backgroundColor: '#333333',
+
     borderRadius: 8,
     overflow: 'hidden',
     elevation: 10,
+    width:'full',
+    maxWidth:180
   },
   categoryName: {
     color: '#ffffff',
@@ -108,7 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 2,        // Adds a 2px border
     borderColor: "white",  // Sets the border color to white
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Optional: Adds a translucent black background for contrast
+    backgroundColor: 'rgba(0, 0, 0, 0.2)', // Optional: Adds a translucent black background for contrast
   },
 
   overlayMain: {
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)', // Semi-transparent overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent overlay
     borderRadius: 8,
   },
   noCategoriesText: {

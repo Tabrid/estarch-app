@@ -11,9 +11,9 @@ const TabStructure = () => {
         screenOptions={{
           headerShown: false,
           tabBarLabel: () => null,
-          tabBarActiveTintColor: 'black',
-          tabBarInactiveTintColor: 'black',
-          tabBarStyle: styles.tabBar,
+          tabBarActiveTintColor: 'orange',
+          tabBarInactiveTintColor: 'gray',
+          tabBarStyle: styles.tabBar, // Apply custom style
         }}
       >
         <Tabs.Screen
@@ -43,6 +43,16 @@ const TabStructure = () => {
             ),
           }}
         />
+
+        <Tabs.Screen
+          name="addToCard"
+          options={{
+            tabBarLabel: "Add TO Card",
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="cart-outline" size={18} color={color} />
+            ),
+          }}
+        />
       </Tabs>
     </View>
   );
@@ -56,10 +66,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   tabBar: {
-    justifyContent: 'flex-start', 
-    paddingLeft: 90, 
-    paddingRight: 90,
-    paddingBottom: 10, 
-    paddingTop: 10, 
+    justifyContent: 'flex-start', // Align tabs to the left
+    paddingLeft: 100, // Optional: Add some left padding for spacing
+    paddingRight: 100, // Optional: Add some left padding for spacing
+    paddingBottom: 10, // Optional: Add some left padding for spacing
+    paddingTop: 10, // Optional: Add some left padding for spacing
   },
 });

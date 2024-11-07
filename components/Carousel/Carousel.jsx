@@ -105,19 +105,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   carousel: {
-    width: '100%',
-    margin:12,
+    width: '100%',   
   },
 
   carouselItem: {
     backgroundColor: '#fff',
     borderRadius: 8,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
     width: screenWidth,
     height: 140,
   
@@ -126,6 +120,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius:8
-    
   },
 });

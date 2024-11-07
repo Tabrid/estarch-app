@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import baseUrl from '../../components/services/baseUrl';
+import baseUrl from '../../../../components/services/baseUrl';
+import { Stack } from 'expo-router';
+import Navbar2 from '../../../../components/Navbar/Navbar2.jsx'
+
 
 const CategoryProducts = () => {
     const route = useRoute();
@@ -37,48 +40,54 @@ const CategoryProducts = () => {
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color="#000" />
             </View>
         );
     }
 
     return (
-        <FlatList
-            data={products}
-            keyExtractor={(item) => item._id}
-            numColumns={2}
-            columnWrapperStyle={styles.row}
-            renderItem={({ item }) => (
-                <View style={styles.card}>
-                    <Image
-                        source={{ uri: `${baseUrl}/${item.images[0]}` }}
-                        style={styles.productImage}
-                        resizeMode="cover"
-                    />
-                    {
-                        item.regularPrice - item.salePrice > 0 && (
-                            <Text style={styles.priceOff}>
-                                {Math.floor((item.regularPrice - item.salePrice) / item.regularPrice * 100)}% off
-                            </Text>
-                        )
-                    }
+        <View className='flex-1'>
+            <Navbar2/>
+            <FlatList
+                data={products}
+                keyExtractor={(item) => item._id}
+                numColumns={2}
+                columnWrapperStyle={styles.row}
+                renderItem={({ item }) => (
+                    <View style={styles.card}>
+                        <Image
+                            source={{ uri: `${baseUrl}/${item.images[0]}` }}
+                            style={styles.productImage}
+                            resizeMode="cover"
+                        />
+                        {
+                            item.regularPrice - item.salePrice > 0 && (
+                                <Text style={styles.priceOff}>
+                                    {Math.floor((item.regularPrice - item.salePrice) / item.regularPrice * 100)}% off
+                                </Text>
+                            )
+                        }
 
-                    <Text style={styles.productName}>
-                        {truncateText(item.productName, 40)} {/* Adjust maxLength as needed */}
-                    </Text>
-                    {
-                        item.regularPrice - item.salePrice > 0 ? (
-                            <Text style={styles.priceText}>
-                                ৳{item.salePrice}{" "}
-                                <Text style={styles.strikeThrough}>৳{item.regularPrice}</Text>
-                            </Text>
-                        ) : (
-                            <Text style={styles.priceText}>৳{item.salePrice}</Text>
-                        )
-                    }
-                </View>
-            )}
-        />
+                        <Text style={styles.productName}>
+                            {truncateText(item.productName, 28)} {/* Adjust maxLength as needed */}
+                        </Text>
+                        {
+                            item.regularPrice - item.salePrice > 0 ? (
+                                <Text style={styles.priceText}>
+                                    ৳{item.salePrice}{" "}
+                                    <Text style={styles.strikeThrough}>৳{item.regularPrice}</Text>
+                                </Text>
+                            ) : (
+                                <Text style={styles.priceText}>৳{item.salePrice}</Text>
+                            )
+                        }
+                    </View>
+                )}
+            />
+            <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="(tabs)" />
+            </Stack>
+        </View>
     );
 };
 
@@ -89,10 +98,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#ffffff',
     },
     row: {
         justifyContent: 'space-between',
         paddingHorizontal: 8,
+        backgroundColor: '#ffffff',
+
     },
     card: {
         flex: 1,
@@ -107,11 +119,12 @@ const styles = StyleSheet.create({
         elevation: 5,
         alignItems: 'center',
         width: 168,
-        height: 280,
+        height: 290,
         maxWidth: 168,
     },
     productImage: {
         width: 168,
+        maxWidth: 168,
         height: 210,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
@@ -121,8 +134,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         marginTop: 8,
-        paddingLeft: 8,
-        paddingRight: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
         textAlign: 'center',
     },
     priceContainer: {
