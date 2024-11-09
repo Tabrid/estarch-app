@@ -50,15 +50,18 @@ const Categories = () => {
 
     if (loading) {
         return (
-            <SafeAreaView style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#000" />
-            </SafeAreaView>
+            <View style={{ flex: 1 }}>
+                <Navbar2 />
+                <SafeAreaView style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#000" />
+                </SafeAreaView>
+            </View>
         );
     }
 
     return (
         <View className='flex-1'>
-            <Navbar2/>
+            <Navbar2 />
             <View style={styles.container}>
                 {categories.length === 0 ? (
                     <Text style={styles.noCategoriesText}>No categories available</Text>

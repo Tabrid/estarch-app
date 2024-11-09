@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, Image } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import baseUrl from '../../../../components/services/baseUrl';
-import { Stack } from 'expo-router';
-import Navbar2 from '../../../../components/Navbar/Navbar2.jsx'
-
+import Navbar2 from '../../../../components/Navbar/Navbar2.jsx';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link, router } from 'expo-router';
 
 const CategoryProducts = () => {
     const route = useRoute();
+    const navigation = useNavigation();
     const { catName } = route.params;
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -36,57 +37,55 @@ const CategoryProducts = () => {
         return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
     };
 
-
     if (loading) {
         return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#000" />
+            <View style={{ flex: 1 }}>
+                <Navbar2 />
+                <SafeAreaView style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#000" />
+                </SafeAreaView>
             </View>
         );
     }
 
     return (
-        <View className='flex-1'>
-            <Navbar2/>
+        <View style={{ flex: 1 }}>
+            <Navbar2 />
             <FlatList
                 data={products}
                 keyExtractor={(item) => item._id}
                 numColumns={2}
                 columnWrapperStyle={styles.row}
                 renderItem={({ item }) => (
-                    <View style={styles.card}>
+                    <TouchableOpacity 
+                        style={styles.card}
+                        onPress={() => router.push(`/product/${item.productName}/${item.SKU}`)} 
+                    >
                         <Image
                             source={{ uri: `${baseUrl}/${item.images[0]}` }}
                             style={styles.productImage}
                             resizeMode="cover"
                         />
-                        {
-                            item.regularPrice - item.salePrice > 0 && (
-                                <Text style={styles.priceOff}>
-                                    {Math.floor((item.regularPrice - item.salePrice) / item.regularPrice * 100)}% off
-                                </Text>
-                            )
-                        }
-
+                        {item.regularPrice - item.salePrice > 0 && (
+                            <Text style={styles.priceOff}>
+                                {Math.floor((item.regularPrice - item.salePrice) / item.regularPrice * 100)}% off
+                            </Text>
+                        )}
                         <Text style={styles.productName}>
-                            {truncateText(item.productName, 28)} {/* Adjust maxLength as needed */}
+                            {truncateText(item.productName, 28)}
                         </Text>
-                        {
-                            item.regularPrice - item.salePrice > 0 ? (
-                                <Text style={styles.priceText}>
-                                    ৳{item.salePrice}{" "}
-                                    <Text style={styles.strikeThrough}>৳{item.regularPrice}</Text>
-                                </Text>
-                            ) : (
-                                <Text style={styles.priceText}>৳{item.salePrice}</Text>
-                            )
-                        }
-                    </View>
+                        {item.regularPrice - item.salePrice > 0 ? (
+                            <Text style={styles.priceText}>
+                                ৳{item.salePrice}{" "}
+                                <Text style={styles.strikeThrough}>৳{item.regularPrice}</Text>
+                            </Text>
+                        ) : (
+                            <Text style={styles.priceText}>৳{item.salePrice}</Text>
+                        )}
+                    </TouchableOpacity>
                 )}
             />
-            <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="(tabs)" />
-            </Stack>
+        
         </View>
     );
 };
@@ -104,7 +103,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 8,
         backgroundColor: '#ffffff',
-
     },
     card: {
         flex: 1,
@@ -137,10 +135,6 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         textAlign: 'center',
-    },
-    priceContainer: {
-        position: 'absolute',
-        bottom: 10,
     },
     priceText: {
         position: 'absolute',
