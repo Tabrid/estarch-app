@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, ActivityIndicator, Text, FlatList, Dimensions } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, ActivityIndicator, Text, FlatList, Dimensions, SafeAreaView } from 'react-native';
 import baseUrl from '../services/baseUrl';
 import { router } from 'expo-router';
+import Navbar from '../Navbar/Navbar';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -47,15 +48,17 @@ const Carousel = () => {
     if (!item || !item.images || item.images.length === 0) return null;
 
     return (
-      <TouchableOpacity onPress={() => router.push(`${item.link}`)}>
-        <View style={styles.carouselItem}>
-          <Image
-            source={{ uri: `${baseUrl}/${item.images[0]}` }}
-            style={styles.carouselImage}
-            resizeMode="cover"
-          />
-        </View>
-      </TouchableOpacity>
+      <SafeAreaView>
+        <TouchableOpacity onPress={() => router.push(`${item.link}`)}>
+          <View style={styles.carouselItem}>
+            <Image
+              source={{ uri: `${baseUrl}/${item.images[0]}` }}
+              style={styles.carouselImage}
+              resizeMode="cover"
+            />
+          </View>
+        </TouchableOpacity>
+      </SafeAreaView>
     );
   };
 
@@ -83,7 +86,7 @@ const Carousel = () => {
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={false}
-      onScrollToIndexFailed={() => {}}
+      onScrollToIndexFailed={() => { }}
       keyExtractor={(item) => item._id}
       style={styles.carousel}
       extraData={currentIndex} // Re-render when currentIndex changes
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   carousel: {
-    width: '100%',   
+    width: '100%',
   },
 
   carouselItem: {
@@ -114,11 +117,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: screenWidth,
     height: 140,
-  
+
   },
   carouselImage: {
     width: '100%',
     height: '100%',
-    borderRadius:8
+    borderRadius: 8
   },
 });
