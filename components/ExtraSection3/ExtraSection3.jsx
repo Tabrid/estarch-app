@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, Animated, ActivityIndicator, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { FlatList, ActivityIndicator, StyleSheet, Image, Text, TouchableOpacity, Dimensions, Animated, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import baseUrl from '../services/baseUrl';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, router, useFocusEffect } from 'expo-router';
-import Carousel from '../Carousel/Carousel';
+import { router } from 'expo-router';
 
-const ExtraSection1 = () => {
+const ExtraSection3 = () => {
     const route = useRoute();
     const navigation = useNavigation();
     const [products, setProducts] = useState([]);
@@ -16,9 +15,10 @@ const ExtraSection1 = () => {
     const [categoryName, setCategoryName] = useState(null);
     const [category, setCategory] = useState(null);
 
+
     const screenWidth = Dimensions.get('window').width; // Get screen width
-    const numColumns = 3; // Set number of columns (3 per row)
-    const cardWidth = (screenWidth - 50) / numColumns; // Calculate card width based on screen size
+    const numColumns = 2; // Set number of columns (2 per row)
+    const cardWidth = (screenWidth - 60) / numColumns; // Calculate card width based on screen size
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,15 +32,17 @@ const ExtraSection1 = () => {
 
                 // Fetch products and related data based on extraSection type
                 if (extraSectionData?.type1 === 'Category') {
-                    const productsRes = await fetch(`${baseUrl}/api/products/products/category/products/${encodeURIComponent(extraSectionData?.name1)}`);
+                    const productsRes = await fetch(`${baseUrl}/api/products/products/category/products/${encodeURIComponent(extraSectionData?.name3)}`);
                     const productsData = await productsRes.json();
                     setProducts(productsData);
+
                     // Fetch category details
-                    const categoryRes = await fetch(`${baseUrl}/api/categories/find/${extraSectionData?.id1}`);
+                    const categoryRes = await fetch(`${baseUrl}/api/categories/find/${extraSectionData?.id3}`);
                     const categoryData = await categoryRes.json();
                     setCategory(categoryData);
+
                 } else if (extraSectionData?.type1 === 'Subcategory') {
-                    const subcategoryRes = await fetch(`${baseUrl}/api/products/products/subcategory/home/${encodeURIComponent(extraSectionData?.name1)}`);
+                    const subcategoryRes = await fetch(`${baseUrl}/api/products/products/subcategory/home/${encodeURIComponent(extraSectionData?.name3)}`);
                     const subcategoryData = await subcategoryRes.json();
                     setProducts(subcategoryData.products);
                     setCategoryName(subcategoryData.subcategory?.category?.name);
@@ -60,6 +62,8 @@ const ExtraSection1 = () => {
 
 
 
+
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {
@@ -68,74 +72,10 @@ const ExtraSection1 = () => {
         };
 
         fetchData();
-    }, [extraSection?.id1, extraSection?.name1, extraSection?.type1]);
-
-
-    // useFocusEffect(
-    //     React.useCallback(() => {
-    //         setLoading(true);
-    //         fetch(`${baseUrl}/api/extra-section`)
-    //             .then((response) => response.json())
-    //             .then((data) => {
-    //                 setExtraSection(data);
-    //                 setLoading(false);
-    //             })
-    //             .catch((error) => {
-    //                 console.error("Error fetching extra section:", error);
-    //                 setLoading(false);
-    //             });
-    //     }, [])
-    // );
-
-    // useFocusEffect(
-    //     React.useCallback(() => {
-    //         setLoading(true);
-    //         if (extraSection?.type1 === 'Category') {
-    //             fetch(`${baseUrl}/api/products/products/category/products/${encodeURIComponent(extraSection?.name1)}`)
-    //                 .then((res) => res.json())
-    //                 .then((data) => {
-    //                     setProducts(data);
-    //                     setLoading(false);
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error("Error fetching products:", error);
-    //                     setLoading(false);
-    //                 });
-
-    //         } else if (extraSection?.type1 === 'Subcategory') {
-    //             fetch(`${baseUrl}/api/products/products/subcategory/home/${encodeURIComponent(extraSection?.name1)}`)
-    //                 .then((res) => res.json())
-    //                 .then((data) => {
-    //                     setProducts(data.products);
-    //                     setCategoryName(data.subcategory?.category?.name);
-    //                     fetch(`${baseUrl}/api/types/${data.subcategory?.category?.type}`)
-    //                         .then((res) => res.json())
-    //                         .then((typeData) => {
-    //                             setTypeName(typeData.name);
-    //                             setLoading(false);
-    //                         })
-    //                         .catch((error) => {
-    //                             console.error("Error fetching type data:", error);
-    //                             setLoading(false);
-    //                         });
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error("Error fetching products:", error);
-    //                     setLoading(false);
-    //                 });
-
-    //         } else {
-    //             console.log("Not accepted");
-    //         }
-    //     }, [])
-    // );
-
-    const truncateText = (text, maxLength) => {
-        return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
-    };
+    }, [extraSection?.id3, extraSection?.name3, extraSection?.type3]);
 
     // Only show the first 6 products
-    const displayedProducts = products.slice(0, 6);
+    const displayedProducts = products.slice(0, 4);
 
     const shimmerAnim = useRef(new Animated.Value(0)).current;
 
@@ -159,7 +99,7 @@ const ExtraSection1 = () => {
 
     if (loading) {
         return (
-            <SafeAreaView style={{ flex: 1, padding: 12 }}>
+            <SafeAreaView style={{ flex: 1}}>
                 {/* <View style={styles.skeletonContainer}>
                     <View style={styles.skeletonImage} />
                     <View style={styles.skeletonRow}>
@@ -172,16 +112,12 @@ const ExtraSection1 = () => {
         );
     }
 
-
-    console.log();
-
-
     return (
-        <View className='mx-4'>
-            <Text className='text-center my-4 font-semibold text-[16px]'>{extraSection?.name1}</Text>
+        <SafeAreaView className='mb-16'>
+            <Text className='text-center mb-4 font-semibold text-[16px]'>{extraSection?.name3}</Text>
             <TouchableOpacity
                 onPress={() => {
-                    router.push(`/homeAllProduct/${extraSection?.type1}/${products[0]?.selectedType}/${extraSection?.name1}`); // Navigate to a special category     
+                    router.push(`/homeAllProduct/${extraSection?.type1}/${products[0]?.selectedType}/${extraSection?.name3}`); // Navigate to a special category     
                 }}
             >
                 <Image
@@ -190,12 +126,11 @@ const ExtraSection1 = () => {
                     resizeMode="cover"
                 />
             </TouchableOpacity>
-
-            <View className='-mt-12'>
+            <View className='-mt-12 mx-4'>
                 <FlatList
                     data={displayedProducts}
                     keyExtractor={(item) => item._id}
-                    numColumns={numColumns}  // Static number of columns
+                    numColumns={numColumns}  // Static number of columns (2 items per row)
                     columnWrapperStyle={styles.row}
                     renderItem={({ item }) => (
                         <TouchableOpacity
@@ -213,7 +148,7 @@ const ExtraSection1 = () => {
                                 </Text>
                             )}
                             <Text style={styles.productName}>
-                                {truncateText(item.productName, 21)}
+                                {item.productName.length > 21 ? `${item.productName.slice(0, 28)}...` : item.productName}
                             </Text>
                             {item.regularPrice - item.salePrice > 0 ? (
                                 <Text style={styles.priceText}>
@@ -227,20 +162,23 @@ const ExtraSection1 = () => {
                     )}
                 />
             </View>
-        </View>
+
+        </SafeAreaView>
     );
 };
 
-export default ExtraSection1;
+export default ExtraSection3;
 
 const styles = StyleSheet.create({
     skeletonContainer: {
         flex: 1,
         justifyContent: 'center',
+
     },
     skeletonRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
+
     },
     skeletonImage: {
         height: 200,
@@ -271,37 +209,36 @@ const styles = StyleSheet.create({
     },
     row: {
         justifyContent: 'space-between',
-        paddingHorizontal: 0,
+        paddingHorizontal: 0,  // Adjust for better spacing between columns
         backgroundColor: '#0000',
-
+        // marginTop:-150,
     },
     card: {
         backgroundColor: '#fff',
         borderRadius: 8,
-        paddingBottom: 0,
-        margin: 3,
+        paddingBottom: 8,
+        margin: 6,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 5,
         alignItems: 'center',
-        height: 220,
+        height: 280,
     },
     productImage: {
         width: '100%',
-        height: 139,
+        height: 202,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
     },
     coverImage: {
         width: '100%',
         height: 210,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        
     },
     productName: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: 'bold',
         color: '#333',
         marginTop: 8,

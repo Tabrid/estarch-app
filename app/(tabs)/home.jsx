@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Carousel from '../../components/Carousel/Carousel';
 import ExtraSection1 from '../../components/ExtraSection1/ExtraSection1';
 import ExtraSection2 from '../../components/ExtraSection2/ExtraSection2';
+import ExtraSection3 from '../../components/ExtraSection3/ExtraSection3';
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -16,6 +17,7 @@ const Index = () => {
     { key: 'carousel', component: <Carousel /> },
     { key: 'extraSection1', component: <ExtraSection1 /> },
     { key: 'extraSection2', component: <ExtraSection2 /> },
+    { key: 'extraSection3', component: <ExtraSection3 /> },
   ];
 
   return (

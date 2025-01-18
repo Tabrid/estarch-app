@@ -33,7 +33,7 @@ const Categories = () => {
     }, []);
 
     const renderCategoryItem = ({ item }) => (
-        <TouchableOpacity onPress={() => router.push(`/categories/${item?.type?.name}/${item?.name}`)} style={styles.categoryItem}>
+        <TouchableOpacity onPress={() => router.push(`/homeAllProduct/Category/${item?.type?.name}/${item?.name}`)} style={styles.categoryItem}>
             <ImageBackground
                 source={{ uri: `${baseUrl}/${item.image}` }}
                 style={styles.imageBackground} // Background image styling
