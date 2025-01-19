@@ -8,6 +8,7 @@ import ExtraSection3 from '../../components/ExtraSection3/ExtraSection3';
 import ExtraSection4 from '../../components/ExtraSection4/ExtraSection4';
 import ExtraSection5 from '../../components/ExtraSection5/ExtraSection5';
 import ExtraSection6 from '../../components/ExtraSection6/ExtraSection6';
+import ExtraSection7 from '../../components/ExtraSection7/ExtraSection7';
 import CategoryHomeCard from '../../components/CategoryHomeCard/CategoryHomeCard';
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -26,6 +27,7 @@ const Index = () => {
     { key: 'extraSection5', component: <ExtraSection5 /> },
     { key: 'CategoryHomeCard', component: <CategoryHomeCard /> },
     { key: 'extraSection6', component: <ExtraSection6 /> },
+    { key: 'extraSection7', component: <ExtraSection7 /> },
   ];
 
   return (

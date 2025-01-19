@@ -21,7 +21,7 @@ const CategoryProducts = () => {
                 // Dynamically construct the URL
                 const url =
                     catOrSubcat === 'Category'
-                        ? `${baseUrl}/api/products/products/category/products/${encodeURIComponent(categoryName)}`
+                        ? `${baseUrl}/api/products/products/category/products/app/${encodeURIComponent(categoryName)}`
                         : `${baseUrl}/api/products/products/subcategory/${encodeURIComponent(categoryName)}`;
 
                 const response = await fetch(url);
