@@ -5,6 +5,9 @@ import Carousel from '../../components/Carousel/Carousel';
 import ExtraSection1 from '../../components/ExtraSection1/ExtraSection1';
 import ExtraSection2 from '../../components/ExtraSection2/ExtraSection2';
 import ExtraSection3 from '../../components/ExtraSection3/ExtraSection3';
+import ExtraSection4 from '../../components/ExtraSection4/ExtraSection4';
+import ExtraSection5 from '../../components/ExtraSection5/ExtraSection5';
+import CategoryHomeCard from '../../components/CategoryHomeCard/CategoryHomeCard';
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -18,6 +21,9 @@ const Index = () => {
     { key: 'extraSection1', component: <ExtraSection1 /> },
     { key: 'extraSection2', component: <ExtraSection2 /> },
     { key: 'extraSection3', component: <ExtraSection3 /> },
+    { key: 'extraSection4', component: <ExtraSection4 /> },
+    { key: 'extraSection5', component: <ExtraSection5 /> },
+    { key: 'CategoryHomeCard', component: <CategoryHomeCard /> },
   ];
 
   return (

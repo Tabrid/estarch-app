@@ -32,7 +32,7 @@ const ExtraSection1 = () => {
 
                 // Fetch products and related data based on extraSection type
                 if (extraSectionData?.type1 === 'Category') {
-                    const productsRes = await fetch(`${baseUrl}/api/products/products/category/products/${encodeURIComponent(extraSectionData?.name1)}`);
+                    const productsRes = await fetch(`${baseUrl}/api/products/products/category/products/home/${encodeURIComponent(extraSectionData?.name1)}`);
                     const productsData = await productsRes.json();
                     setProducts(productsData);
                     // Fetch category details
@@ -91,7 +91,7 @@ const ExtraSection1 = () => {
     //     React.useCallback(() => {
     //         setLoading(true);
     //         if (extraSection?.type1 === 'Category') {
-    //             fetch(`${baseUrl}/api/products/products/category/products/${encodeURIComponent(extraSection?.name1)}`)
+    //             fetch(`${baseUrl}/api/products/products/category/products/home/${encodeURIComponent(extraSection?.name1)}`)
     //                 .then((res) => res.json())
     //                 .then((data) => {
     //                     setProducts(data);
@@ -160,14 +160,14 @@ const ExtraSection1 = () => {
     if (loading) {
         return (
             <SafeAreaView style={{ flex: 1, padding: 12 }}>
-                {/* <View style={styles.skeletonContainer}>
+                <View style={styles.skeletonContainer}>
                     <View style={styles.skeletonImage} />
                     <View style={styles.skeletonRow}>
                         {Array.from({ length: numColumns }).map((_, index) => (
                             <SkeletonCard key={index} />
                         ))}
                     </View>
-                </View> */}
+                </View>
             </SafeAreaView>
         );
     }

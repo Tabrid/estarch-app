@@ -5,7 +5,7 @@ import baseUrl from '../services/baseUrl';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 
-const ExtraSection3 = () => {
+const ExtraSection4 = () => {
     const route = useRoute();
     const navigation = useNavigation();
     const [products, setProducts] = useState([]);
@@ -29,21 +29,26 @@ const ExtraSection3 = () => {
                 const extraSectionRes = await fetch(`${baseUrl}/api/extra-section`);
                 const extraSectionData = await extraSectionRes.json();
                 setExtraSection(extraSectionData);
+                
 
                 // Fetch products and related data based on extraSection type
-                if (extraSectionData?.type3 === 'Category') {
-                    const productsRes = await fetch(`${baseUrl}/api/products/products/category/products/home/${encodeURIComponent(extraSectionData?.name3)}`);
+                if (extraSectionData?.type4 === 'Category') {
+                    const productsRes = await fetch(`${baseUrl}/api/products/products/category/products/home/${encodeURIComponent(extraSectionData?.name4)}`);
                     const productsData = await productsRes.json();
                     setProducts(productsData);
 
                     // Fetch category details
-                    const categoryRes = await fetch(`${baseUrl}/api/categories/find/${extraSectionData?.id3}`);
+                    const categoryRes = await fetch(`${baseUrl}/api/categories/find/${extraSectionData?.id4}`);
                     const categoryData = await categoryRes.json();
                     setCategory(categoryData);
+                    console.log("category;");
+                    
 
-                } else if (extraSectionData?.type3 === 'Subcategory') {
-                    const subcategoryRes = await fetch(`${baseUrl}/api/products/products/subcategory/home/${encodeURIComponent(extraSectionData?.name3)}`);
+                } else if (extraSectionData?.type4 === 'Subcategory') {
+                    console.log("subcategory");
+                    const subcategoryRes = await fetch(`${baseUrl}/api/products/products/subcategory/home/${encodeURIComponent(extraSectionData?.name4)}`);
                     const subcategoryData = await subcategoryRes.json();
+                    
                     setProducts(subcategoryData.products);
                     setCategoryName(subcategoryData.subcategory?.category?.name);
 
@@ -52,13 +57,13 @@ const ExtraSection3 = () => {
                     setTypeName(typeData.name);
 
                     // Fetch Subcategory details
-                    const subcategoryResponse = await fetch(`${baseUrl}/api/categories/subcategories/find/${extraSectionData?.id3}`);
+                    const subcategoryResponse = await fetch(`${baseUrl}/api/categories/subcategories/find/${extraSectionData?.id4}`);
                     const subcategoryInfo = await subcategoryResponse.json();
                     setCategory(subcategoryInfo);
-
                 } else {
                     console.log("Not accepted");
                 }
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {
@@ -67,7 +72,9 @@ const ExtraSection3 = () => {
         };
 
         fetchData();
-    }, [extraSection?.id3, extraSection?.name3, extraSection?.type3]);
+    }, [extraSection?.id4, extraSection?.name4, extraSection?.type4]);
+
+    
 
     // Only show the first 6 products
     const displayedProducts = products.slice(0, 4);
@@ -108,11 +115,11 @@ const ExtraSection3 = () => {
     }
 
     return (
-        <SafeAreaView className=''>
-            <Text className='text-center mb-4 font-semibold text-[16px]'>{extraSection?.name3}</Text>
+        <SafeAreaView >
+            <Text className='text-center mb-4 font-semibold text-[16px]'>{extraSection?.name4}</Text>
             <TouchableOpacity
                 onPress={() => {
-                    router.push(`/homeAllProduct/${extraSection?.type3}/${products[0]?.selectedType}/${extraSection?.name3}`); // Navigate to a special category     
+                    router.push(`/homeAllProduct/${extraSection?.type4}/${products[0]?.selectedType}/${extraSection?.name4}`); // Navigate to a special category     
                 }}
             >
                 <Image
@@ -162,7 +169,7 @@ const ExtraSection3 = () => {
     );
 };
 
-export default ExtraSection3;
+export default ExtraSection4;
 
 const styles = StyleSheet.create({
     skeletonContainer: {
