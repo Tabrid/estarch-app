@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from '../../components/Carousel/Carousel';
+import CategoryHomeCardTop from '../../components/CategoryHomeCardTop/CategoryHomeCardTop';
 import ExtraSection1 from '../../components/ExtraSection1/ExtraSection1';
 import ExtraSection2 from '../../components/ExtraSection2/ExtraSection2';
 import ExtraSection3 from '../../components/ExtraSection3/ExtraSection3';
@@ -20,6 +21,7 @@ const Index = () => {
   // Define your sections
   const sections = [
     { key: 'carousel', component: <Carousel /> },
+    { key: 'CategoryHomeCardTop', component: <CategoryHomeCardTop /> },
     { key: 'extraSection1', component: <ExtraSection1 /> },
     { key: 'extraSection2', component: <ExtraSection2 /> },
     { key: 'extraSection3', component: <ExtraSection3 /> },
