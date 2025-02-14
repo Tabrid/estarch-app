@@ -1,16 +1,32 @@
 // app/NavBar.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { toggleDrawer } from '../../lib/slices/drawerSlice';
-import { useNavigation, useRoute } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Navbar = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-   
+    const [user, setUser] = useState(null); // Start with null to differentiate between loading and no user
+
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('User');
+            if (value) {
+                setUser(JSON.parse(value)); // Parse the JSON string to an object
+            } else {
+                setUser(null); // Set explicitly to null if no user data
+            }
+        } catch (e) {
+            console.error('Error reading value from AsyncStorage:', e);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
     return (
         <View style={styles.container}>
             {/* Hamburger Icon */}
@@ -27,7 +43,7 @@ const Navbar = () => {
                     />
                 </TouchableOpacity>
             </View>
-            <Text className='pr-2'>Hi,Guest</Text>
+            <Text className='pr-2'>Hi,{user?.fullName}</Text>
 
             {/* User Profile Icon */}
             <TouchableOpacity onPress={() => console.log('Profile pressed')}>
@@ -57,7 +73,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4.65,
 
         elevation: 0,
-        borderBottomWidth: 3,       // Adds a 2px border
+        borderBottomWidth: 3, 
         borderColor: "#88888825"
     },
     logoContainer: {
@@ -65,8 +81,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 110, // Adjust according to your logo size
-        height: 40,  // Adjust according to your logo size
+        width: 110, 
+        height: 40,  
         resizeMode: 'contain',
         marginRight: 120,
         marginBottom:2

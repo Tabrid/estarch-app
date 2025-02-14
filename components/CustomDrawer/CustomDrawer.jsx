@@ -32,7 +32,7 @@ const CustomDrawer = () => {
         }, {});
 
         setCategories(groupedCategories);
-        setOpenTypes(Object.keys(groupedCategories));
+        // setOpenTypes(Object.keys(groupedCategories));
 
       } catch (error) {
         console.error('Error fetching categories:', error);

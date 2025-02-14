@@ -47,7 +47,6 @@ const CategoryProducts = () => {
             </View>
         );
     }
-
     return (
         <View style={{ flex: 1 }}>
             <Navbar2 />

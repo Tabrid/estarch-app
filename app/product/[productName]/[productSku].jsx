@@ -22,7 +22,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/products/products/product-details/${encodeURIComponent(productName)}/${productSku}`);
+        const response = await axios.get(`${baseUrl}/api/products/products/product-details/${productSku}`);
         setProduct(response.data);
         setLoading(false);  // Set loading to false after data is fetched
       } catch (error) {
@@ -50,7 +50,7 @@ const ProductDetails = () => {
     return (
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: imageUrl || 'https://via.placeholder.com/300x300.png' }} // Fallback to placeholder
+          source={{ uri: imageUrl || 'https://via.placeholder.com/300x300.png' }} 
           style={styles.productImage}
         />
       </View>
