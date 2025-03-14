@@ -13,7 +13,7 @@ const TabStructure = () => {
           tabBarLabel: () => null,
           tabBarActiveTintColor: 'orange',
           tabBarInactiveTintColor: 'gray',
-          tabBarStyle: styles.tabBar, // Apply custom style
+          tabBarStyle: styles.tabBar, 
         }}
       >
         <Tabs.Screen
@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   tabBar: {
-    justifyContent: 'flex-start', // Align tabs to the left
-    paddingLeft: 100, // Optional: Add some left padding for spacing
-    paddingRight: 100, // Optional: Add some left padding for spacing
-    paddingBottom: 10, // Optional: Add some left padding for spacing
-    paddingTop: 10, // Optional: Add some left padding for spacing
+    justifyContent: 'flex-start', 
+    paddingLeft: 100, 
+    paddingRight: 100, 
+    paddingBottom: 10,
+    paddingTop: 10, 
   },
 });

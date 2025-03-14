@@ -45,6 +45,7 @@ const Categories = () => {
         </View>
       </ImageBackground>
     </TouchableOpacity>
+
   );
 
   if (loading) {
@@ -64,8 +65,8 @@ const Categories = () => {
           data={categories}
           keyExtractor={(item) => item._id}
           renderItem={renderCategoryItem}
-          numColumns={2} // Two items per row
-          columnWrapperStyle={styles.row} // Optional: spacing between items
+          numColumns={2}
+          columnWrapperStyle={styles.row}
         />
       )}
     </SafeAreaView>
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
 
   },
   row: {
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between',
   },
   categoryItem: {
     flex: 1,
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     maxWidth:180
   },
   categoryName: {
-    color: '#ffffff', // White text color for readability on black background
+    color: '#ffffff',
     fontSize: 12,
     fontWeight: 'bold',
     paddingVertical: 4,
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   noCategoriesText: {
-    color: '#ffffff', // White text color for "No categories" message
+    color: '#ffffff',
     textAlign: 'center',
   },
 });

@@ -7,7 +7,6 @@ import baseUrl from '../../../components/services/baseUrl';
 import { useRoute } from '@react-navigation/native';
 import HTMLView from 'react-native-htmlview';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 const { width: screenWidth } = Dimensions.get('window');
 
 const ProductDetails = () => {
@@ -22,12 +21,12 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/products/products/product-details/${encodeURIComponent(productName)}/${productSku}`);
+        const response = await axios.get(`${baseUrl}/api/products/products/product-details/${productName}/${productSku}`);
         setProduct(response.data);
-        setLoading(false);  // Set loading to false after data is fetched
+        setLoading(false);  
       } catch (error) {
         console.error('Error fetching product details:', error);
-        setLoading(false);  // Set loading to false in case of error
+        setLoading(false);  
       }
     };
 
@@ -50,7 +49,7 @@ const ProductDetails = () => {
     return (
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: imageUrl || 'https://via.placeholder.com/300x300.png' }} // Fallback to placeholder
+          source={{ uri: imageUrl || 'https://via.placeholder.com/300x300.png' }} 
           style={styles.productImage}
         />
       </View>

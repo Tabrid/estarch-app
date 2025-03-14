@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, View ,BackHandler, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from '../../components/Carousel/Carousel';
 import CategoryHomeCardTop from '../../components/CategoryHomeCardTop/CategoryHomeCardTop';
@@ -13,10 +13,32 @@ import ExtraSection7 from '../../components/ExtraSection7/ExtraSection7';
 import CategoryHomeCard from '../../components/CategoryHomeCard/CategoryHomeCard';
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect } from 'expo-router';
 
 const Index = () => {
-  const count = useSelector((state) => state.counter.value);
-  const dispatch = useDispatch();
+  const handleBackPress = () => {
+    Alert.alert('Exit App', 'Are you sure you want to exit?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'Exit',
+        onPress: () => BackHandler.exitApp(),
+      },
+    ]);
+    return true;
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const backHandlerListener = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () => {
+        backHandlerListener.remove();
+      };
+    }, [])
+  );
 
   // Define your sections
   const sections = [
@@ -34,7 +56,7 @@ const Index = () => {
 
   return (
     <View>
-      <Navbar/>
+      <Navbar />
       <FlatList
         data={sections}
         keyExtractor={(item) => item.key}

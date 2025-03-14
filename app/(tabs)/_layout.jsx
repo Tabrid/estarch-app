@@ -13,7 +13,7 @@ const TabStructure = () => {
           tabBarLabel: () => null,
           tabBarActiveTintColor: 'black',
           tabBarInactiveTintColor: 'black',
-          tabBarStyle: styles.tabBar, // Apply custom style
+          tabBarStyle: styles.tabBar,
         }}
       >
         <Tabs.Screen
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   tabBar: {
-    backgroundColor: '#f8f8f8',  // Set the background color to red
+    backgroundColor: '#f8f8f8',  
     justifyContent: 'flex-start', 
     paddingLeft: 90, 
     paddingRight: 90,

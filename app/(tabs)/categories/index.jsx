@@ -47,7 +47,6 @@ const Categories = () => {
             </ImageBackground>
         </TouchableOpacity>
     );
-
     if (loading) {
         return (
             <View style={{ flex: 1 }}>

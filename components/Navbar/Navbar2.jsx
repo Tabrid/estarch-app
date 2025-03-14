@@ -1,5 +1,5 @@
 // app/NavBar.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,10 +7,27 @@ import { useDispatch } from 'react-redux';
 import { toggleDrawer } from '../../lib/slices/drawerSlice';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Navbar2 = () => {
     const router = useRouter();
+    const [user, setUser] = useState(null); // Start with null to differentiate between loading and no user
 
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('User');
+            if (value) {
+                setUser(JSON.parse(value)); // Parse the JSON string to an object
+            } else {
+                setUser(null); // Set explicitly to null if no user data
+            }
+        } catch (e) {
+            console.error('Error reading value from AsyncStorage:', e);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
     const handleGoBack = () => {
         router.back();
     };
@@ -30,16 +47,14 @@ const Navbar2 = () => {
                     />
                 </TouchableOpacity>
             </View>
-            <Text className='pr-2'>Hi,Guest</Text>
-
+            <Text className="pr-2">Hi, {user?.fullName?.split(' ')[0] || 'Guest'}</Text>
             {/* User Profile Icon */}
-            <TouchableOpacity onPress={() => console.log('Profile pressed')}>
+            <TouchableOpacity onPress={() => router.push(user? '/user' : '/Auth/login')}>
                 <Ionicons name="person" size={24} color="black" />
             </TouchableOpacity>
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -58,9 +73,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-
         elevation: 0,
-        borderBottomWidth: 3,       // Adds a 2px border
+        borderBottomWidth: 3,       
         borderColor: "#88888825"
     },
     logoContainer: {
@@ -68,8 +82,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 110, // Adjust according to your logo size
-        height: 40,  // Adjust according to your logo size
+        width: 110,
+        height: 40,  
         resizeMode: 'contain',
         marginRight: 120,
         marginBottom:2
