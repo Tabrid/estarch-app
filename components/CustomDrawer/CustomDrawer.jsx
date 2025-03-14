@@ -62,7 +62,7 @@ const CustomDrawer = () => {
         animatedStyle,
         {
           position: 'absolute',
-          top: 26,
+          top: 0,
           left: 0,
           height: screenHeight,
           width: 256,
@@ -152,7 +152,6 @@ const CustomDrawer = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    marginTop: 8,
   },
   categoryContainer: {
     marginBottom: 16,

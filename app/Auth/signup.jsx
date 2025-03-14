@@ -36,40 +36,51 @@ export default function SignUp() {
                     email,
                     password
                 }),
-                credentials: 'include', 
+                credentials: 'include',
             });
-        
+            console.log(response);
+            
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
-        
-            const data = await response.json(); 
+
+            const data = await response.json();
             await AsyncStorage.setItem('User', JSON.stringify(data.user));
             router.push(`/home`)
         } catch (err) {
             console.log(err);
-        }        
+        }
     };
-
+    const handleGoBack = () => {
+        router.back();
+    };
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 14 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
-                <ScrollView contentContainerStyle={{ padding: 16 }}
+
+                <ScrollView contentContainerStyle={{  }}
                     showsVerticalScrollIndicator={false}
                 >
+                    <View className='flex pl-2 p-2 justify-center border-b border-gray-300'>
+                        {/* Hamburger Icon */}
+                        <TouchableOpacity onPress={() => handleGoBack()}>
+                            <Ionicons name="chevron-back" size={24} color="black" />
+
+                        </TouchableOpacity>
+                    </View>
                     {/* Profile Details Section */}
 
-                    <View style={{ marginBottom: 32 }}>
+                    <View style={{ marginBottom: 12 , marginTop: 20 ,padding: 16, flex: 1, justifyContent: 'center', paddingHorizontal: 30}}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 12 }}>Profile Details</Text>
                         <TextInput
                             placeholder="Full name"
                             style={{
                                 backgroundColor: '#e2e2e2',
                                 borderRadius: 8,
-                                padding: 16,
+                                padding: 10,
                                 marginBottom: 16,
                             }}
                             onChangeText={(text) => setName(text)}
@@ -80,7 +91,7 @@ export default function SignUp() {
                             style={{
                                 backgroundColor: '#e2e2e2',
                                 borderRadius: 8,
-                                padding: 16,
+                                padding: 10,
                                 marginBottom: 16,
                             }}
                             onChangeText={(text) => setAddress(text)}
@@ -90,7 +101,7 @@ export default function SignUp() {
                     </View>
 
                     {/* Account Details Section */}
-                    <View style={{ marginBottom: 32 }}>
+                    <View style={{ marginBottom: 12 , padding: 16, flex: 1, justifyContent: 'center', paddingHorizontal: 30 }}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 12 }}>Account Details</Text>
                         <TextInput
                             placeholder="Phone"
@@ -98,7 +109,7 @@ export default function SignUp() {
                             style={{
                                 backgroundColor: '#e2e2e2',
                                 borderRadius: 8,
-                                padding: 16,
+                                padding: 10,
                                 marginBottom: 16,
                             }}
                             onChangeText={(text) => setPhone(text)}
@@ -110,7 +121,7 @@ export default function SignUp() {
                             style={{
                                 backgroundColor: '#e2e2e2',
                                 borderRadius: 8,
-                                padding: 16,
+                                padding: 10,
                                 marginBottom: 16,
                             }}
                             onChangeText={(text) => setEmail(text)}
@@ -124,7 +135,7 @@ export default function SignUp() {
                                 style={{
                                     backgroundColor: '#e2e2e2',
                                     borderRadius: 8,
-                                    padding: 16,
+                                    padding: 10,
                                     paddingRight: 40, // Ensure space for the icon
                                     marginBottom: 8,
                                 }}
@@ -155,7 +166,9 @@ export default function SignUp() {
                         style={{
                             backgroundColor: 'black',
                             borderRadius: 8,
-                            padding: 16,
+                            padding: 10,
+                            marginHorizontal: 30,
+                          
                         }}
                         onPress={handleSubmit}
                     >

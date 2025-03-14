@@ -47,16 +47,14 @@ const Navbar2 = () => {
                     />
                 </TouchableOpacity>
             </View>
-            <Text className='pr-2'>Hi,{user?.fullName}</Text>
-
+            <Text className="pr-2">Hi, {user?.fullName?.split(' ')[0] || 'Guest'}</Text>
             {/* User Profile Icon */}
-            <TouchableOpacity onPress={() => console.log('Profile pressed')}>
+            <TouchableOpacity onPress={() => router.push(user? '/user' : '/Auth/login')}>
                 <Ionicons name="person" size={24} color="black" />
             </TouchableOpacity>
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -75,7 +73,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-
         elevation: 0,
         borderBottomWidth: 3,       
         borderColor: "#88888825"
