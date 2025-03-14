@@ -12,7 +12,6 @@ import ExtraSection6 from '../../components/ExtraSection6/ExtraSection6';
 import ExtraSection7 from '../../components/ExtraSection7/ExtraSection7';
 import CategoryHomeCard from '../../components/CategoryHomeCard/CategoryHomeCard';
 import Navbar from '../../components/Navbar/Navbar.jsx';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
 
 const Index = () => {

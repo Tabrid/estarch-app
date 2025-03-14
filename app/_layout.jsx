@@ -28,7 +28,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar barStyle="light-content" backgroundColor="#000" />
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
         <Animated.View style={[styles.animatedView, animatedStyle]}>
           
           <Stack screenOptions={{ headerShown: false }}>

@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
+        paddingHorizontal:15
     },
     loadingContainer: {
         flex: 1,
@@ -98,7 +99,6 @@ const styles = StyleSheet.create({
     categoryItem: {
         flex: 1,
         margin: 5,
-
         borderRadius: 8,
         overflow: 'hidden',
         elevation: 10,

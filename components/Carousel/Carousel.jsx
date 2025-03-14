@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: screenWidth,
     height: 140,
+    paddingHorizontal:12
 
   },
   carouselImage: {

@@ -2,8 +2,10 @@ import { View, Text, Image, TouchableOpacity, TextInput, ScrollView } from 'reac
 import { useState } from 'react';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import Navbar2 from '../../components/Navbar/Navbar2.jsx';
+import { useRouter } from 'expo-router';
 
 const Cart = () => {
+  const router = useRouter();
   const [cart, setCart] = useState([{ id: 1, name: 'Mens Premium T-Shirt-Anti', price: 599, quantity: 1, size: 'M' }]);
 
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -79,7 +81,7 @@ const Cart = () => {
       {cart.length > 0 && (
         <View className="absolute bottom-0 left-0 right-0 bg-black p-4 flex-row justify-between items-center">
           <Text className="text-white text-lg">Total Price - ৳{totalPrice.toFixed(2)}</Text>
-          <TouchableOpacity className="bg-white px-4 py-2 rounded-lg">
+          <TouchableOpacity onPress={() => router.push(`/product/order`)} className="bg-white px-4 py-2 rounded-lg">
             <Text className="text-black">Next ➜</Text>
           </TouchableOpacity>
         </View>

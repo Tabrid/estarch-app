@@ -5,8 +5,8 @@ import { router } from 'expo-router';
 
 const CustomTab = () => {
     return (
-        <View className=' bg-[#f8f8f8] flex flex-row items-center justify-between' style={styles.container}>
-            <View className='flex flex-row gap-8 ml-[18%] mb-2'>
+        <View className=' bg-[#f8f8f8] flex flex-row items-center justify-between'>
+            <View className='flex flex-row gap-8 ml-[21%] mb-2'>
                 <TouchableOpacity onPress={() => router.push(`/home`)} style={styles.navItem} className='pt-4'>
                     <Ionicons  name="home-outline" size={18} color={'black'} />
                     <Text  style={styles.label}>Home</Text>

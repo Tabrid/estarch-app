@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     row: {
         justifyContent: 'space-between',
-        paddingHorizontal: 8,
+        paddingHorizontal: 20,
         backgroundColor: '#ffffff',
     },
     card: {

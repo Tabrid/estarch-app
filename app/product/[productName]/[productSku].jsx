@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Dimensions, FlatList, Animated, ActivityIndicator } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Dimensions, FlatList, ActivityIndicator } from 'react-native';
 import CustomTab from '../../../components/CustomTab/CustomTab';
 import Navbar2 from '../../../components/Navbar/Navbar2';
 import axios from 'axios';
@@ -7,41 +7,51 @@ import baseUrl from '../../../components/services/baseUrl';
 import { useRoute } from '@react-navigation/native';
 import HTMLView from 'react-native-htmlview';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 const { width: screenWidth } = Dimensions.get('window');
 
 const ProductDetails = () => {
   const route = useRoute();
   const { productName, productSku } = route.params;
+  
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [loading, setLoading] = useState(true);  // Track loading state
-  const [selectedSize, setSelectedSize] = useState(null); // Add selectedSize state
+  const [loading, setLoading] = useState(true);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/products/products/product-details/${productName}/${productSku}`);
         setProduct(response.data);
-        setLoading(false);  
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching product details:', error);
-        setLoading(false);  
+        setLoading(false);
       }
     };
 
     fetchProduct();
   }, [productName, productSku]);
 
-  const handleScroll = (event) => {
-    const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const currentIndex = Math.floor(contentOffsetX / screenWidth); // Calculate the index of the image currently in view
-    setActiveIndex(currentIndex);
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+    setErrorMessage(null); // Clear error when size is selected
   };
 
-  // Define handleSizeSelect function to update selected size
-  const handleSizeSelect = (size) => {
-    setSelectedSize(size); // Update selectedSize state with the chosen size
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      setErrorMessage('Please select a size before adding to cart.');
+      return;
+    }
+    
+    // Clear error message if size is selected
+    setErrorMessage(null);
+
+    // Implement your add-to-cart logic here
+    console.log(`Added ${product.productName} (Size: ${selectedSize}) to cart.`);
   };
 
   const renderImageItem = ({ item }) => {
@@ -49,7 +59,7 @@ const ProductDetails = () => {
     return (
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: imageUrl || 'https://via.placeholder.com/300x300.png' }} 
+          source={{ uri: imageUrl || 'https://via.placeholder.com/300x300.png' }}
           style={styles.productImage}
         />
       </View>
@@ -66,6 +76,7 @@ const ProductDetails = () => {
       </View>
     );
   }
+
   return (
     <View style={{ flex: 1 }}>
       <Navbar2 />
@@ -79,8 +90,11 @@ const ProductDetails = () => {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item}
-          onScroll={handleScroll} // Track scrolling
-          scrollEventThrottle={16} // Adjust frequency of scroll events (16ms for smooth scrolling)
+          onMomentumScrollEnd={(event) => {
+            const newIndex = Math.round(event.nativeEvent.contentOffset.x / screenWidth);
+            setActiveIndex(newIndex);
+          }}
+          scrollEventThrottle={16}
         />
 
         {/* Pagination Dots */}
@@ -90,32 +104,34 @@ const ProductDetails = () => {
               key={index}
               style={[
                 styles.paginationDot,
-                index === activeIndex && styles.activeDot, // Highlight the active dot
+                index === activeIndex && styles.activeDot,
               ]}
             />
           ))}
         </View>
 
         {/* Product Details */}
-        <View className='space-y-2'>
-          <Text className='text-center font-semibold text-sm'>{product?.productName}</Text>
-          <Text className='text-center  font-semibold text-sm'>৳ {product?.salePrice}.00</Text>
-          <Text className='text-center  font-semibold text-lg'>Select Size</Text>
-          {/* Size selection */}
-          <View className='flex flex-row justify-center gap-2'>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.productTitle}>{product?.productName}</Text>
+          <Text style={styles.productPrice}>৳ {product?.salePrice}.00</Text>
+
+          {/* Size Selection */}
+          <Text style={styles.sizeTitle}>Select Size</Text>
+          <View style={styles.sizeContainer}>
             {product?.selectedSizes.map((size) => (
               <TouchableOpacity
                 key={size}
                 style={[
                   styles.sizeButton,
-                  selectedSize === size && styles.selectedSizeButton, // Apply selected style if size is selected
+                  selectedSize === size && styles.selectedSizeButton,
                 ]}
-                onPress={() => handleSizeSelect(size)} // Handle size selection
+                onPress={() => handleSizeSelect(size)}
               >
                 <Text style={styles.sizeButtonText}>{size}</Text>
               </TouchableOpacity>
             ))}
           </View>
+  
         </View>
 
         <View style={styles.descriptionContainer}>
@@ -127,10 +143,11 @@ const ProductDetails = () => {
         <HTMLView style={{ paddingHorizontal: 24 }} value={product?.content || '<p>No content available.</p>'} />
 
       </ScrollView>
-      <CustomTab />
+      <CustomTab selectedSize={selectedSize} />
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -140,7 +157,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
   },
   productImage: {
     width: '100%',
@@ -163,66 +179,47 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#bbb', // Inactive dot color
+    backgroundColor: '#bbb',
     margin: 5,
   },
   activeDot: {
-    backgroundColor: '#4CAF50', // Active dot color
+    backgroundColor: '#4CAF50',
+  },
+  detailsContainer: {
+    paddingHorizontal: 24,
+    alignItems: 'center',
   },
   productTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  quantityContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
-    paddingHorizontal: 20,
-  },
-  quantityTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginRight: 10,
-  },
-  quantityButton: {
-    fontSize: 24,
-    width: 40,
     textAlign: 'center',
-    paddingVertical: 5,
-    backgroundColor: '#ddd',
-    borderRadius: 5,
+    marginTop: 10,
   },
-  quantityText: {
-    fontSize: 18,
-    marginHorizontal: 20,
-  },
-  descriptionContainer: {
-    paddingHorizontal: 24, // Equivalent to 'px-6' in Tailwind
-  },
-  horizontalLine: {
-    height: 1,
-    backgroundColor: '#000', // Or any color you prefer for the line
-    marginVertical: 8,
-  },
-  descriptionText: {
-    paddingVertical: 8, // Equivalent to 'py-2' in Tailwind
-    fontSize: 18, // Equivalent to 'text-lg' in Tailwind
-  },
-  sizeContainer: {
-    marginVertical: 20,
-    paddingHorizontal: 20,
+  productPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+    textAlign: 'center',
+    marginVertical: 5,
   },
   sizeTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  sizeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+    marginTop: 10,
   },
   sizeButton: {
     backgroundColor: '#eee',
     padding: 10,
-    marginVertical: 5,
     borderRadius: 5,
     alignItems: 'center',
+    minWidth: 50,
   },
   selectedSizeButton: {
     backgroundColor: '#4CAF50',
@@ -231,5 +228,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+    fontSize: 14,
+  },
+  descriptionContainer: {
+    paddingHorizontal: 24,
+  },
+  horizontalLine: {
+    height: 1,
+    backgroundColor: '#000',
+    marginVertical: 8,
+  },
+  descriptionText: {
+    paddingVertical: 8,
+    fontSize: 18,
+  },
 });
+
 export default ProductDetails;

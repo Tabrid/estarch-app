@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Snackbar } from 'react-native-paper';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
-const CustomTab = () => {
+const CustomTab = ({ selectedSize }) => {
     const router = useRouter();
     const [isAdded, setIsAdded] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [message, setMessage] = useState('');
+
     const handlePress = () => {
-        setIsAdded(true); // Change state on press
+        if (!selectedSize) {
+            setMessage('Please select a size');
+            setVisible(true);
+            return;
+        }
+        setIsAdded(true);
     };
+
+    const onDismissSnackBar = () => setVisible(false);
+
     return (
         <View style={styles.container}>
             <View style={styles.navItems}>
@@ -27,10 +39,29 @@ const CustomTab = () => {
                     <Text style={styles.label}>Cart</Text>
                 </TouchableOpacity>
             </View>
-
-            <TouchableOpacity style={[styles.navItem, isAdded ? styles.checkoutButton : styles.addToCartButton]} onPress={handlePress}>
-                <Text style={styles.addToCartText} className='text-center '>{isAdded ? "Checkout" : "Add To Cart"}</Text>
+            <TouchableOpacity
+                style={[styles.navItem, isAdded ? styles.checkoutButton : styles.addToCartButton]}
+                onPress={isAdded ? () => router.push('/cart') : handlePress} // Conditionally navigate or add to cart
+            >
+                <Text style={styles.addToCartText} className="text-center">
+                    {isAdded ? "Checkout" : "Add To Cart"}
+                </Text>
             </TouchableOpacity>
+
+
+            {/* Snackbar for error message */}
+            <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                duration={Snackbar.DURATION_SHORT}
+                style={styles.snackbar}
+                action={{
+                    label: 'OK',
+                    onPress: onDismissSnackBar,
+                }}
+            >
+                {message}
+            </Snackbar>
         </View>
     );
 };
@@ -41,12 +72,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-
     },
     navItems: {
         flexDirection: 'row',
-        gap: 20,
-        marginLeft: 10,
+        gap: 35,
+        marginLeft: 15,
         marginRight: 16,
         padding: 8,
     },
@@ -78,6 +108,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         paddingVertical: 16,
+    },
+    snackbar: {
+        backgroundColor: '#000',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        width: '90%',
+        alignSelf: 'center',
+        bottom: 10, // Adjust to show it near the top
     },
 });
 
