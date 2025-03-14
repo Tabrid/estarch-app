@@ -46,7 +46,8 @@ const CategoryHomeCard = () => {
                     style={[styles.card, styles.viewMoreCard]}
                     onPress={() => { router.push(`/categories`) }}
                 >
-                    <Text style={styles.viewMoreText}>{windowSymbol} {item.name}</Text>
+                    <Text style={styles.viewMoreTextSymbol}>{windowSymbol}</Text>
+                    <Text style={styles.viewMoreText}>{item.name}</Text>
                 </TouchableOpacity>
             );
         }
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     cardText: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#fff',
         fontWeight: 'bold',
         textAlign: 'center',
@@ -150,7 +151,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingVertical: 2,
         borderColor: '#fff',
-        borderRadius: 4
+        borderRadius: 4,
+        marginTop: '30%'
+
     },
     viewMoreCard: {
         backgroundColor: '#007BFF',
@@ -161,5 +164,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#fff',
         fontWeight: 'bold',
+    },
+    viewMoreTextSymbol: {
+        fontSize: 56,
+        color: '#fff',
+        // fontWeight: 'bold',
     },
 });

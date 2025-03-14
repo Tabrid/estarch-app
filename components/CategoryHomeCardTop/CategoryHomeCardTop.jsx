@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         marginTop:'50%'
     },
     viewMoreCard: {
-        backgroundColor: '#007BFF',
+        backgroundColor: '#577BC1',
         alignItems: 'center',
         justifyContent: 'center',
     },
